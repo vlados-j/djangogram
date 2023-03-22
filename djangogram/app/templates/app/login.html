@@ -1,0 +1,20 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+<h1>Login</h1>
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+    <form method="POST" class="form-control">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Login</button>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        <div class="d-flex justify-content links">
+            Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+        </div>
+    </form>
+{% endblock %}
