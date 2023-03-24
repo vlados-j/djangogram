@@ -1,5 +1,12 @@
 {% extends 'app/base.html' %}
 
-{% block content %}
+{% block title %}
 <h1>Feed</h1>
+{% endblock %}
+
+{% block content %}
+    <h1>Hello, {{ user.first_name }}</h1>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
 {% endblock %}

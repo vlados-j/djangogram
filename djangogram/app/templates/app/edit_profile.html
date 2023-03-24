@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+<h1>Edit profile</h1>
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Save changes</button>
+    </form>
+{% endblock %}

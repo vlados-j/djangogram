@@ -1,5 +1,14 @@
 {% extends 'app/base.html' %}
 
-{% block content %}
+{% block title %}
 <h1>My profile</h1>
+{% endblock %}
+
+{% block content %}
+{% load thumbnail %}
+<img src="{% thumbnail request.user.avatar 150x150 crop %}" alt="" />
+<a class="btn btn-sm btn-info" href="{% url 'edit_profile' %}">Edit profile</a>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
 {% endblock %}

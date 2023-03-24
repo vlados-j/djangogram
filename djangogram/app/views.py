@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegisterForm
+from .forms import RegisterForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
@@ -10,7 +10,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
-
 from .tokens import account_activation_token
 
 
@@ -30,7 +29,10 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("feed")
+                if user.first_name and user.last_name:
+                    return redirect("feed")
+                else:
+                    return redirect("edit_profile")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -104,6 +106,20 @@ def feed(request):
 @login_required(login_url='login')
 def my_profile(request):
     return render(request, 'app/my_profile.html')
+
+
+@login_required(login_url='login')
+def edit_profile(request):
+    user = request.user
+    form = EditProfileForm(instance=user)
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The information in your profile has been successfully changed')
+            return redirect('my_profile')
+    context = {'form': form}
+    return render(request, 'app/edit_profile.html', context)
 
 
 @login_required(login_url='login')
