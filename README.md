@@ -5,5 +5,6 @@ In terms of functionality, Djangogram is a project comparable to Instagram. By u
 The user can upload images to posts and view those of other users via a feed of the most recent posts. Guests who are not permitted cannot view a user's profile or images.
 There may be several photos in each post. There can be several tags in one post. Authors can also add new tags. Users can also like posts (and unlike as well).
 
-<h2>Currently the project is being developed. Please, check the stage of the project below. 
-Also, if you'd like to check the code, please, change the branch to 'dev' as the project is being developed.</h2>
+<h2>Currently the project is being developed. Please, check the stage of the project below.</h2>
+
+<h2>Also, if you'd like to check the code, please, change the branch to 'dev' as the project is being developed.</h2>
