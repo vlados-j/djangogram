@@ -9,7 +9,6 @@ There may be several photos in each post. There can be several tags in one post.
 
 <h2>Also, if you'd like to check the code, please, change the branch to 'dev' because the project is being developed.</h2>
 
-
 <h1>Project stages:</h1>
 
 1. Creating the models ✅
