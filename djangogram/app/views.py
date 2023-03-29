@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegisterForm, EditProfileForm
+from .forms import RegisterForm, EditProfileForm, PostCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
+from .models import Image, Post
 
 
 def home(request):
@@ -105,7 +106,14 @@ def feed(request):
 
 @login_required(login_url='login')
 def my_profile(request):
-    return render(request, 'app/my_profile.html')
+    users_posts = request.user.posts.all()
+    return render(request, 'app/my_profile.html', {'posts': users_posts})
+
+
+@login_required(login_url='login')
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    return render(request, 'app/post_detail.html', {'post': post})
 
 
 @login_required(login_url='login')
@@ -124,7 +132,19 @@ def edit_profile(request):
 
 @login_required(login_url='login')
 def create_post(request):
-    return render(request, 'app/new_post.html')
+    if request.method == 'POST':
+        form = PostCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            images = request.FILES.getlist('images')
+            for image in images:
+                Image.objects.create(post=post, image=image)
+            return redirect('my_profile')
+    else:
+        form = PostCreationForm()
+    return render(request, 'app/new_post.html', {'form': form})
 
 
 @login_required(login_url='login')

@@ -1,5 +1,13 @@
 {% extends 'app/base.html' %}
 
+{% block title %}
+<h1>Create a new post</h1>
+{% endblock %}
+
 {% block content %}
-<h1>New post</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 {% endblock %}

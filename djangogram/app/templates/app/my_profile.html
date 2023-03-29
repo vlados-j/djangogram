@@ -1,14 +1,43 @@
 {% extends 'app/base.html' %}
 
-{% block title %}
-<h1>My profile</h1>
-{% endblock %}
-
 {% block content %}
 {% load thumbnail %}
-<img src="{% thumbnail request.user.avatar 150x150 crop %}" alt="" />
-<a class="btn btn-sm btn-info" href="{% url 'edit_profile' %}">Edit profile</a>
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}
+{% for message in messages %}
+    <p>{{ message }}</p>
+{% endfor %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-3">
+        <img src="{% thumbnail request.user.avatar 150x150 crop %}" alt="" />
+      </div>
+      <div class="col-md-9">
+        <!-- User's information -->
+        <h1>{{ user.username }}</h1>
+        <p>{{ user.bio }}</p>
+        <p>{{ user.email }}</p>
+        <a class="btn btn-sm btn-info" href="{% url 'edit_profile' %}">Edit profile</a>
+      </div>
+    </div>
+    <hr>
+    <h2>Posts</h2>
+    {% if posts %}
+      <div class="row">
+        {% for post in posts %}
+          <div class="col-md-4">
+            <!-- Post photo and description -->
+            <div class="card mb-4">
+                <img src="{% thumbnail post.images.first.image 500x500 crop %}" alt="" />
+              <div class="card-body">
+                <a href="{% url 'post_detail' post.id %}">
+                  <h5 class="card-title">{{ post.description }}</h5>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No posts yet!</p>
+    {% endif %}
+  </div>
 {% endblock %}

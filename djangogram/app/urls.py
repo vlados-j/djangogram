@@ -12,4 +12,5 @@ urlpatterns = [
     path('users_profile/', views.view_users_profile, name='users_profile'), #here should be dinamic url
     path('logout/', views.logout_user, name='logout'),
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
+    path('profile/posts/<int:post_id>', views.post_detail, name='post_detail'),
 ]

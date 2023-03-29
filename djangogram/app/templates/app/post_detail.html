@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+{% load thumbnail %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for image in post.images.all %}
+              <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for image in post.images.all %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{% thumbnail image.image 550x550 crop %}" alt="{{ image.description }}">
+              </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        <h2>{{ post.description }}</h2>
+        <p>{{ post.user.username }} - {{ post.created_at }}</p>
+        <p>{{ post.content }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
