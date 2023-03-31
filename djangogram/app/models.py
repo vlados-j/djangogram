@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     bio = models.CharField(max_length=150)
-    avatar = models.ImageField(default='default_profile_pic.jpg', upload_to='profile_pics')
+    avatar = models.ImageField(default='profile_pics/default_profile_pic.jpg', upload_to='profile_pics')
     registered_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
 
