@@ -17,8 +17,5 @@ There may be several photos in each post. There can be several tags in one post.
 4. Email confirmation ✅
 5. Generating the previews for the photos ✅
 6. Managing the posts (in process)
-7. Deploying the code to the cloud (S3, RDS, Elastic Beanstalk) (in process)
-8. Writing tests (in process)
-9. Adding extended functionality to DjangoGram (in process)
-10. Adding a nice look (in process)
-11. Login via third-party services (in process)
+7. Deploying the code to the cloud (S3, RDS, Elastic Beanstalk) ✅
+8. Adding a nice look (in process)
